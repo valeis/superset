@@ -128,6 +128,7 @@ RUN apt-get update -qq \
 # Cache everything for dev purposes...
 RUN --mount=type=bind,target=./requirements/development.txt,src=./requirements/development.txt \
     --mount=type=cache,target=/root/.cache/pip \
+    --mount=type=bind,target=./requirements/base.txt,src=./requirements/base.txt \
     pip install -r requirements/development.txt
 
 USER superset
