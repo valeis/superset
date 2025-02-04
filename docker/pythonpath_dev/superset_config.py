@@ -109,13 +109,13 @@ OVERRIDE_HTTP_HEADERS = { 'X-Frame-Options': 'ALLOWALL' }
 HTTP_HEADERS = { "X-Frame-Options" : "ALLOWALL" }
 
 WTF_CSRF_ENABLED=False 
-HTTP_HEADERS = {'Content-Security-Policy': 'frame-ancestors http://localhost:9000'}
+HTTP_HEADERS = {'Content-Security-Policy': 'frame-ancestors http://localhost:9002'}
 CORS_OPTIONS = {
     "supports_credentials": True,
     "allow_headers": "*",
     "expose_headers": "*",
     "resources": "*",
-    "origins": ["http://localhost:9000"]
+    "origins": ["http://localhost:9002"]
 }
 
 #

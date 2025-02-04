@@ -1,17 +1,40 @@
 version: "3.7"
 services:
   superset:
-    image: phenya28/superset:apache-superset 
+    image: valeis/apache-superset:latest
     ports:
       - "8085:8088"
+    networks:
+      - superset-network
     container_name: superset
     environment:
       - SUPERSET_SECRET_KEY=BiMJbGJthWHmBOKfYII8zntacJM3ETv1sgoO3cmJiR4NZ8OdWehNsisV
-      - SUPERSET_PASSWORD=123qweASD
+      - SUPERSET_PASSWORD=admin
       - SUPERSET_USERNAME=admin
+    # command: >
+    #   sh -c "superset db upgrade && superset init && superset run"
     restart: unless-stopped
+    user: root
     volumes:
-      - superset:/app 
-
+      - ./custom_setup/config.py:/app/superset/config.py
+    # volumes:
+    #   - superset:/app 
+  postgres:
+      container_name: postgres_17
+      image: postgres:17.0
+      networks:
+        - superset-network
+      environment:
+        POSTGRES_DB: sippc
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: pass
+        POSTGRES_HOST_AUTH_METHOD: trust
+      ports:
+        - "5440:5432" 
+    
 volumes:
   superset:
+
+networks:
+  superset-network:
+    driver: bridge
